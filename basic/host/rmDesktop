@@ -1,0 +1,17 @@
+#!/bin/bash
+# Remove desktop
+# Syntax $0 [vncDesktopNumber]
+
+display=${1-1}
+tmpDir=/tmp/vncMonitor/$display
+
+if ! [ -d "$tmpDir" ]; then
+	echo "Does not appear to be running." >&2
+	exit 1
+fi
+
+cd "$tmpDir/pids"
+kill *
+rm *
+
+vncserver -kill :$display

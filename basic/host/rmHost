@@ -1,0 +1,11 @@
+#!/bin/bash
+# Stop the stuff needed on the host
+# Syntax $0
+
+tmpDir=/tmp/vncMonitor/host
+
+# cd "$tmpDir/pids"
+# kill *
+# rm *
+
+killall synergys

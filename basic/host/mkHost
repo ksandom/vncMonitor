@@ -1,0 +1,10 @@
+#!/bin/bash
+# Run stuff that needs to be running on the host
+
+tmpDir=/tmp/vncMonitor/host
+mkdir -p $tmpDir/host
+
+synergys -c synergy.conf -n host
+pid=$$
+echo $pid > $tmpDir/pids/$pid
+

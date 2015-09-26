@@ -1,0 +1,27 @@
+#!/bin/bash
+# Creates an extra desktop
+# Syntax $0 [vncDesktopNumber]
+#   vncDesktopNumber defaults to 1
+
+# vncDesktopNumber
+display=${1-1}
+displayName=${2-right}
+
+geometry=1920x1080
+depth=24
+
+tmpDir=/tmp/vncMonitor/$display
+mkdir -p $tmpDir/pids
+
+
+# Create the X session
+echo vncserver -depth $depth -geometry $geometry :$display
+vncserver -depth $depth -geometry $geometry :$display
+pid=$$
+echo vncserver > $tmpDir/pids/$pid
+
+# Join synergy
+synergyc -n $displayName -display :$display localhost
+pid=$$
+echo synergy > $tmpDir/pids/$pid
+

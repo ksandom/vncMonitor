@@ -1,0 +1,9 @@
+#!/bin/bash
+# Install stuff required on the host
+
+# tightvncserver - For creating the desktops.
+# icewm - For managing the extra desktops.
+# synergy - For moving the mouse and keyboard between windows.
+# xpra - For moving windows between desktops.
+
+apt-get install tightvncserver icewm synergy xpra 
