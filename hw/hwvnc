@@ -2,9 +2,14 @@
 # Quickly shares a list of screens individually.
 #
 # Eg
-# $0 list
-# $0 eDP-1
-# $0 eDP-1 DP-2
+# List out the possible displays to share.
+#   $0 list
+# 
+# Start a session on eDP-1.
+#   $0 eDP-1
+# 
+# Start sessions on eDP-1 and DP-2.
+#   $0 eDP-1 DP-2
 
 passwdFile=~/.vnc/passwd
 
@@ -36,7 +41,7 @@ function start
         done
     fi
     
-    x11vnc -loop $usepw -clip "$2" 2>&1 | while read in; do echo "$1: $in"; done
+    x11vnc -nevershared -forever $usepw -clip "$2" 2>&1 | while read in; do echo "$1: $in"; done
 }
 
 function startWrapper
@@ -51,7 +56,7 @@ function startWrapper
 }
 
 case $1 in
-    "list")
+    "list") # List the possible displays.
         list
     ;;
     *)
