@@ -11,7 +11,31 @@
 # Start sessions on eDP-1 and DP-2.
 #   $0 eDP-1 DP-2
 
-passwdFile=~/.vnc/passwd
+configHome=~/.vnc
+passwdFile="$configHome/passwd"
+ourConfig="$configHome/hwvnc"
+
+function assertConfig
+{
+    if [ ! -e "$ourConfig" ]; then
+        ## # This is where to configure hwvnc.
+        ## 
+        ## # Default devices to share.
+        ## # * Space separated.
+        ## # * '' to default to none.
+        ## # * 'all' to individually share all of the connected displays.
+        ## # * Use `./hwvnc list` to see possible devices to share.
+        ## CONFIG_defaultShare=''
+        ## 
+        ## # Shared - Whether a given connection can have multiple clients connected concurrently.
+        ## CONFIG_shared='-nevershared'
+        ## 
+        ## # Other options
+        ## CONFIG_other=''
+        
+        grep '  *## ' hwvnc | sed 's/.*## //g' > "$ourConfig"
+    fi
+}
 
 function list
 {
@@ -41,7 +65,7 @@ function start
         done
     fi
     
-    x11vnc -nevershared -forever $usepw -clip "$2" 2>&1 | while read in; do echo "$1: $in"; done
+    x11vnc -alwaysshared "$CONFIG_shared" $usepw -clip "$2" $CONFIG_other 2>&1 | while read in; do echo "$1: $in"; done
 }
 
 function startWrapper
@@ -55,14 +79,27 @@ function startWrapper
     fi
 }
 
+
+
+assertConfig
+. "$ourConfig"
+
 case $1 in
     "list") # List the possible displays.
         list
     ;;
     *)
-        for device in "$@"; do
-            startWrapper "$device"
-        done
+        # TODO Refactor this.
+        if [ "$1" != '' ]; then
+            for device in "$@"; do
+                startWrapper "$device"
+            done
+        else
+            for device in $CONFIG_defaultShare; do
+                startWrapper "$device"
+            done
+        fi
+        
         wait
     ;;
 esac
