@@ -24,17 +24,25 @@ function assertConfig
         ## # * Space separated.
         ## # * '' to default to none.
         ## # * 'all' to individually share all of the connected displays.
-        ## # * Use `./hwvnc list` to see possible devices to share.
+        ## # * Use `./hwvnc --list` to see possible devices to share.
         ## CONFIG_defaultShare=''
         ## 
         ## # Shared - Whether a given connection can have multiple clients connected concurrently.
         ## CONFIG_shared='-nevershared'
         ## 
         ## # Other options
-        ## CONFIG_other=''
+        ## CONFIG_other='-loop'
         
         grep '  *## ' hwvnc | sed 's/.*## //g' > "$ourConfig"
     fi
+}
+
+function help
+{
+    grep '^# ' $0 | cut -b 3-
+    
+    echo -e "\\nParemeters"
+    grep ') #' $0 | sed 's/) #/~~~/g' | grep -v grep | column -t -s '~~~'
 }
 
 function list
@@ -71,7 +79,7 @@ function start
 function startWrapper
 {
     if list | grep -q "$1"; then
-        clip=$(list | grep "$1" | getClip)
+        clip=$(list | grep "^$1" | getClip)
         start "$1" "$clip" &
     else
         echo "Could not find \"$2\"."
@@ -85,7 +93,10 @@ assertConfig
 . "$ourConfig"
 
 case $1 in
-    "list") # List the possible displays.
+    '--help') # Display this help.
+        help
+    ;;
+    '--list') # List the possible displays.
         list
     ;;
     *)
