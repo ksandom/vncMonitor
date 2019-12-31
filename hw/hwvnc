@@ -32,6 +32,11 @@ function assertConfig
         ## 
         ## # Other options
         ## CONFIG_other='-loop'
+        ## 
+        ## # IP addresses to ping. This is for funky home routers that regularly forget where devices are.
+        ## # * Space separated
+        ## CONFIG_PING_IPs=''
+        ## CONFIG_PING_interval=3
         
         grep '  *## ' hwvnc | sed 's/.*## //g' > "$ourConfig"
     fi
@@ -87,6 +92,15 @@ function startWrapper
     fi
 }
 
+function pingThings
+{
+    if [ "$CONFIG_PING_IPs" != '' ]; then
+        for IP in $CONFIG_PING_IPs; do
+            ping -i"$CONFIG_PING_interval" "$IP" &
+        done
+    fi
+}
+
 
 
 assertConfig
@@ -110,6 +124,8 @@ case $1 in
                 startWrapper "$device"
             done
         fi
+        
+        pingThings
         
         wait
     ;;
