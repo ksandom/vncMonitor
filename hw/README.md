@@ -33,20 +33,20 @@ Have a look at ~/.vnc/hwvnc . You can change the behavior of the tool using
 
 If you haven't set a password already, it will warn you and give you instructions. You really should have this on to prevent anyone passing by from connecting to your session.
 
-### Clear text
+### Clear text and Encryption
 
 Know where you're running it. There are [implications](https://www.reddit.com/r/AskNetsec/comments/3djr8t/could_someone_explain_to_me_what_makes_vnc/) that should be considered.
 
+If you can, it's worth enabling SSL encryption. You can see how to do it by reading the comments in ~/.vnc/hwvnc.
+
+#### Known to work with SSL
+
+* Ubuntu 19.10
+
+#### Known to not work with SSL
+
+* Ubuntu 18.10
+
 ### Sharing
 
-By default, sharing (multiple concurrent connections) is not enabled. This is to prevent extra devices from silently connecting, and makes it obvioius if someone is trying to (and succeeding in) taking over your session. You can change this behavior by editing ~/.vnc/hwvnc and changing this line
-
-```bash
-CONFIG_shared='-nevershared'
-```
-
-to
-
-```bash
-CONFIG_shared='-alwaysshared'
-```
+By default, sharing (multiple concurrent connections) is not enabled. This is to prevent extra devices from silently connecting, and makes it obvioius if someone is trying to (and succeeding in) taking over your session. You can change this behavior by editing ~/.vnc/hwvnc. Take a look at the cooments in the file to see how.

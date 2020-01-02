@@ -20,26 +20,31 @@ function assertConfig
     if [ ! -e "$ourConfig" ]; then
         ## # This is where to configure hwvnc.
         ## 
-        ## ### Default devices to share.
+        ## #- Default devices to share.
         ## # * Space separated.
         ## # * '' to default to none.
         ## # * 'all' to individually share all of the connected displays.
         ## # * Use `./hwvnc --list` to see possible devices to share.
         ## CONFIG_defaultShare=''
         ## 
-        ## ### Shared - Whether a given connection can have multiple clients connected concurrently.
+        ## #- Shared - Whether a given connection can have multiple clients connected concurrently.
         ## CONFIG_shared='-nevershared'
         ## # CONFIG_shared='-loop -forever -shared'
         ## 
-        ## ### Other options
+        ## #- Other options
+        ## # * -ssl -sslonly - Strongly recommended if it will work for you. It's known to not work for some versions of _____ (x11vnc?).
+        ## #   * Ubuntu 19.10 - Known good.
+        ## #   * Ubuntu 18.10 - Known to not work.
+        ## # * -viewonly - Remove this if you want to be able to interact with the VNC session. EG you want to use the touchscreen of a tablet.
         ## CONFIG_other='-viewonly -ssl'
         ## # CONFIG_other='-viewonly -ssl -sslonly'
         ## 
-        ## ### IP addresses to ping. This is for funky home routers that regularly forget where devices are.
+        ## #- IP addresses to ping. This is for funky home routers that regularly forget where devices are.
         ## # * Space separated
         ## CONFIG_PING_IPs=''
         ## CONFIG_PING_interval=3
         
+        mkdir -p "$(dirname $ourConfig)"
         grep '  *## ' hwvnc | sed 's/.*## //g' > "$ourConfig"
     fi
 }
