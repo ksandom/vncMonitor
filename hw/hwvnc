@@ -20,26 +20,27 @@ function assertConfig
     if [ ! -e "$ourConfig" ]; then
         ## # This is where to configure hwvnc.
         ## 
-        ## ### Default devices to share.
+        ## ## Default devices to share.
         ## # * Space separated.
         ## # * '' to default to none.
         ## # * 'all' to individually share all of the connected displays.
         ## # * Use `./hwvnc --list` to see possible devices to share.
         ## CONFIG_defaultShare=''
         ## 
-        ## ### Shared - Whether a given connection can have multiple clients connected concurrently.
+        ## ## Shared - Whether a given connection can have multiple clients connected concurrently.
         ## CONFIG_shared='-nevershared'
         ## # CONFIG_shared='-loop -forever -shared'
         ## 
-        ## ### Other options
+        ## ## Other options
         ## CONFIG_other='-viewonly -ssl'
         ## # CONFIG_other='-viewonly -ssl -sslonly'
         ## 
-        ## ### IP addresses to ping. This is for funky home routers that regularly forget where devices are.
+        ## ## IP addresses to ping. This is for funky home routers that regularly forget where devices are.
         ## # * Space separated
         ## CONFIG_PING_IPs=''
         ## CONFIG_PING_interval=3
         
+        mkdir -p "$(dirname $ourConfig)"
         grep '  *## ' hwvnc | sed 's/.*## //g' > "$ourConfig"
     fi
 }

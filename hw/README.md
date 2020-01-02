@@ -39,14 +39,4 @@ Know where you're running it. There are [implications](https://www.reddit.com/r/
 
 ### Sharing
 
-By default, sharing (multiple concurrent connections) is not enabled. This is to prevent extra devices from silently connecting, and makes it obvioius if someone is trying to (and succeeding in) taking over your session. You can change this behavior by editing ~/.vnc/hwvnc and changing this line
-
-```bash
-CONFIG_shared='-nevershared'
-```
-
-to
-
-```bash
-CONFIG_shared='-alwaysshared'
-```
+By default, sharing (multiple concurrent connections) is not enabled. This is to prevent extra devices from silently connecting, and makes it obvioius if someone is trying to (and succeeding in) taking over your session. You can change this behavior by editing ~/.vnc/hwvnc. Take a look at the cooments in the file to see how.
