@@ -36,8 +36,8 @@ function assertConfig
         ## #   * Ubuntu 19.10 - Known good.
         ## #   * Ubuntu 18.10 - Known to not work.
         ## # * -viewonly - Remove this if you want to be able to interact with the VNC session. EG you want to use the touchscreen of a tablet.
-        ## CONFIG_other='-viewonly -ssl'
-        ## # CONFIG_other='-viewonly -ssl -sslonly'
+        ## CONFIG_other='-ncache 10 -viewonly -ssl'
+        ## # CONFIG_other='-ncache 10 -viewonly -ssl -sslonly'
         ## 
         ## #- IP addresses to ping. This is for funky home routers that regularly forget where devices are.
         ## # * Space separated
